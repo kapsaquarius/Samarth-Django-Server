@@ -1,0 +1,1 @@
+web: gunicorn samarth.wsgi --log-file -
