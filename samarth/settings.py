@@ -25,7 +25,7 @@ SECRET_KEY = 'zkgtf(x$659@h$4an@wn8r%fpp$ice1eh2%btw(63bv7hca)0i'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

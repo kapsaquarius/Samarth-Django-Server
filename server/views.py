@@ -97,7 +97,7 @@ class DonorRegisterView(APIView):
 			"covidNegativeWeeks": 2,
 			"isPregnant": "Yes",
 			"chronicIllnesses": ["asthma"],
-			"covidPositiveWeeks": 5,
+			"covidPositiveWeeks": 5
 
 		 } 
 
