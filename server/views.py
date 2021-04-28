@@ -48,7 +48,7 @@ class AddUserView(APIView):
 		except:
 			# Database error, we return 501 status code
 			err = {'error':'Some thing went wrong on our end'}
-			Response(err,status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+			return Response(err,status = status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 		# If everything goes fine, we return 201 status code
@@ -109,11 +109,85 @@ class DonorRegisterView(APIView):
 		except:
 			# Database error
 			err = {'error':'Some thing went wrong on our end'}
-			Response(err,status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+			return Response(err,status = status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 		# If everything goes fine, we return 201 status code
 		successContent = {'status': 'Donor Registered Created'}
 		return Response(successContent, status = status.HTTP_201_CREATED)
+
+class DonorGetView(APIView):
+
+	def get(self,request,*args,**kwargs):
+		pass
+	def post(self,request,*args,**kwargs):
+
+		reqData = request.data
+
+		reqDataDict = dict(reqData)
+
+		pin = reqDataDict['pincode']
+		state = reqDataDict['state']
+
+		try:
+
+			client = MongoClient()
+
+			# Connect to mongodb
+			client = MongoClient('mongodb+srv://samarth:covid19Help@cluster0.4qbde.mongodb.net/test')
+
+			query = {'pincode': pin }
+
+			# Access RegisterDonor db,
+			getDonorDB = client['RegisterDonor']
+
+
+			donorsInPincode = getDonorDB[state+'-Collection'].find(query)
+
+			res = []
+
+			if donorsInPincode.count() != 0:
+				for doc in donorsInPincode:
+					doc['_id'] = str(doc['_id'])
+					res.append(doc)
+			else:
+				strPin = str(pin)
+				firstThree = strPin[0:3]
+
+				pincodes = getDonorDB[state+'-Collection'].distinct('pincode')
+
+				print(pincodes)
+
+				selectedPins = []
+				for pincode in pincodes:
+					strPin = str(pincode)
+					if firstThree == strPin[0:3]:
+						selectedPins.append(pincode)
+			
+
+				newQuery = {"pincode": { "$in": selectedPins}}
+
+
+				donors = getDonorDB[state+'-Collection'].find(newQuery)
+
+			
+				for doc in donors:
+					doc['_id'] = str(doc['_id'])
+					res.append(doc)
+
+		except:
+			# Database error
+			err = {'error':'Some thing went wrong on our end'}
+			return Response(err,status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+		#If everything goes fine, we return 200 status code
+		successContent = {'status': 'Success'}
+		return Response(res,status = status.HTTP_201_CREATED)
+
+
+		
+
+
+
 
 
 		
