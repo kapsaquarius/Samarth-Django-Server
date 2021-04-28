@@ -67,18 +67,10 @@ class DonorRegisterView(APIView):
 			{
 			    "fullName" : "Raghav Saxena",
 			    "mobileNumber" : 9803458287,
-			    "age": 54,
-			    "gender": "Male",
 			    "bloodGroup": "AB-",
 			    "city": "Mumbai",
 			    "state": "Maharashtra",
-			    "pincode": 400088,
-			    "district": "Mumbai Suburban City",
-			    "isDiabetic": "Yes",
-			    "covidNegativeWeeks": 1,
-			    "isPregnant": "No",
-			    "chronicIllnesses": ["alzheimers","diabetes"],
-			    "covidPositiveWeeks": 4
+			    "pincode": 400088
 			} 
 
 
@@ -86,18 +78,10 @@ class DonorRegisterView(APIView):
 		 {
 			"fullName" : "Sindhura Dasari",
 			"mobileNumber" : 9324745828,
-			"age": 32,
-			"gender": "Female",
 			"bloodGroup": "B+",
 			"city": "Warangal",
 			"state": "Telangana",
-			"pincode": 506002,
-			"district": "Warangal Urban",
-			"isDiabetic": "No",
-			"covidNegativeWeeks": 2,
-			"isPregnant": "Yes",
-			"chronicIllnesses": ["asthma"],
-			"covidPositiveWeeks": 5
+			"pincode": 506002
 
 		 } 
 
