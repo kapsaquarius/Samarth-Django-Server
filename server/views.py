@@ -183,6 +183,57 @@ class DonorGetView(APIView):
 		successContent = {'status': 'Success'}
 		return Response(res,status = status.HTTP_201_CREATED)
 
+class AddResourceView(APIView):
+	def get(self,request,*args,**kwargs):
+		pass
+
+	def post(self,request,*args,**kwargs):
+
+		reqData = request.data
+
+		reqDataDict = dict(reqData)
+
+
+		state = reqDataDict['state']
+
+		category = reqDataDict['category']
+		category = category.lower()
+		category = category.replace(" ","")
+
+		reqDataDict['category'] = category
+
+
+		try:
+			client = MongoClient()
+
+			# Connect to mongodb
+			client = MongoClient('mongodb+srv://samarth:covid19Help@cluster0.4qbde.mongodb.net/test')
+
+			# Access db, if not created, mongodb creates it automatically
+			categoryDB = client[category]
+
+			# Insert request data in db
+			categoryDB[state+'-Collection'].insert_one(reqDataDict)
+
+		except:
+			# Database error
+			err = {'error':'Some thing went wrong on our end'}
+			return Response(err,status = status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+		#If everything goes fine, we return 200 status code
+		successContent = {'status': 'Resource added'}
+		return Response(successContent,status = status.HTTP_201_CREATED)
+
+
+
+
+
+
+		
+
+
+
+
 
 		
 
